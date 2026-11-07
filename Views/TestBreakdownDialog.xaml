@@ -1,0 +1,228 @@
+<UserControl x:Class="NetPulse.Views.TestBreakdownDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="620">
+    <Grid Background="#B0050810">
+        <Border Background="#131B2B"
+                BorderBrush="#24324D"
+                BorderThickness="1"
+                CornerRadius="20"
+                MaxWidth="580"
+                MaxHeight="680"
+                Margin="20"
+                Padding="22"
+                VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="32" Height="32" CornerRadius="10" Background="#2000E5FF">
+                            <TextBlock Text="📊" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock x:Name="TitleText"
+                                       Text="Детали теста скорости"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       Foreground="#F1F5F9"/>
+                            <TextBlock x:Name="DateText"
+                                       Text="02 нояб., 16:45"
+                                       FontSize="11"
+                                       Foreground="#94A3B8"
+                                       Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Content="✕"
+                            Click="OnCloseClick"
+                            Width="30"
+                            Height="30"
+                            Background="#1C273D"
+                            Foreground="#94A3B8"
+                            BorderBrush="#24324D"
+                            BorderThickness="1"
+                            Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+                <!-- Body (Scrollable) -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Quality Score Card -->
+                        <Border x:Name="GradeCard"
+                                CornerRadius="14"
+                                BorderThickness="1"
+                                Padding="14"
+                                Margin="0,0,0,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock x:Name="GradeTitle" Text="Итог: Превосходно" FontSize="15" FontWeight="Bold"/>
+                                    <TextBlock x:Name="GradeSubtitle" Text="Идеально для 4K Ultra HD стриминга и киберспорта" FontSize="12" Foreground="#94A3B8" Margin="0,3,0,0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" x:Name="GradeScoreCircle" Width="42" Height="42" CornerRadius="21" VerticalAlignment="Center">
+                                    <TextBlock x:Name="GradeScoreText" Text="98" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Download Section -->
+                        <Border Background="#1C273D" BorderBrush="#24324D" BorderThickness="1" CornerRadius="14" Padding="14" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="DownloadSectionTitle" Text="СКАЧИВАНИЕ (DOWNLOAD)" FontSize="11" FontWeight="Bold" Foreground="#00E5FF" Margin="0,0,0,8"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Средняя" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="DlAvgText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#00E5FF"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Пиковая" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="DlPeakText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#F1F5F9"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Минимальная" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="DlMinText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#94A3B8"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Upload Section -->
+                        <Border Background="#1C273D" BorderBrush="#24324D" BorderThickness="1" CornerRadius="14" Padding="14" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="UploadSectionTitle" Text="ОТДАЧА (UPLOAD)" FontSize="11" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Средняя" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="UlAvgText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#10B981"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Пиковая" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="UlPeakText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#F1F5F9"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Минимальная" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="UlMinText" Text="—" FontSize="16" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#94A3B8"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Latency & Network Info Section -->
+                        <Border Background="#1C273D" BorderBrush="#24324D" BorderThickness="1" CornerRadius="14" Padding="14" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock x:Name="LatencySectionTitle" Text="ЗАДЕРЖКА И СЕТЬ" FontSize="11" FontWeight="Bold" Foreground="#38BDF8" Margin="0,0,0,8"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Пинг" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="PingValText" Text="—" FontSize="15" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#F1F5F9"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Джиттер" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="JitterValText" Text="—" FontSize="15" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#00E5FF"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Потери" FontSize="11" Foreground="#94A3B8"/>
+                                        <TextBlock x:Name="LossValText" Text="0%" FontSize="15" FontWeight="Bold" FontFamily="Consolas, Roboto Mono" Foreground="#10B981"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Rectangle Height="1" Fill="#24324D" Margin="0,4,0,8"/>
+
+                                <TextBlock x:Name="ServerDetailsText" Text="Сервер: Cloudflare Edge" FontSize="12" Foreground="#94A3B8"/>
+                                <TextBlock x:Name="NetworkDetailsText" Text="Сеть: Wi-Fi" FontSize="12" Foreground="#94A3B8" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer Buttons -->
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            x:Name="ShareBtn"
+                            Click="OnShareClick"
+                            Background="#1A00E5FF"
+                            Foreground="#00E5FF"
+                            BorderBrush="#00E5FF"
+                            BorderThickness="1"
+                            FontWeight="Bold"
+                            FontSize="13"
+                            Height="40"
+                            Margin="0,0,6,0"
+                            Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="ShareIcon" Text="📋 "/>
+                            <TextBlock x:Name="ShareLabel" Text="Копировать отчёт"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Grid.Column="1"
+                            x:Name="CloseBtn"
+                            Content="Закрыть"
+                            Click="OnCloseClick"
+                            Background="#1C273D"
+                            Foreground="#F1F5F9"
+                            FontWeight="Bold"
+                            FontSize="13"
+                            Height="40"
+                            Margin="6,0,0,0"
+                            Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

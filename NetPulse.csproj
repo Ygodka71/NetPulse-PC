@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationTitle>NetPulse</ApplicationTitle>
+    <RootNamespace>NetPulse</RootNamespace>
+    <AssemblyName>NetPulse</AssemblyName>
+    <ApplicationIcon>Assets\Icons\app_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\app_icon.ico" />
+    <Resource Include="Assets\Icons\app_icon.jpg" />
+    <Resource Include="Assets\Fonts\*.ttf" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,522 @@
+<UserControl x:Class="NetPulse.Views.SettingsDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="620">
+    <Grid Background="#B0050810">
+        <Border Background="#131B2B"
+                BorderBrush="#24324D"
+                BorderThickness="1"
+                CornerRadius="20"
+                MaxWidth="580"
+                MaxHeight="680"
+                Margin="14"
+                Padding="18,16"
+                VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="32" Height="32" CornerRadius="16" Background="#2000E5FF">
+                            <TextBlock Text="⚙" FontSize="16" Foreground="#00E5FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="TitleBlock"
+                                   Text="Настройки"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#F1F5F9"
+                                   Margin="10,0,0,0"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Content="✕"
+                            Click="OnCloseClick"
+                            Width="30"
+                            Height="30"
+                            Background="#1C273D"
+                            Foreground="#94A3B8"
+                            BorderBrush="#24324D"
+                            BorderThickness="1"
+                            Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+                <!-- Body (Scrollable) -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- SECTION 1: APPEARANCE THEME -->
+                        <TextBlock x:Name="ThemeSectionHeader"
+                                   Text="ТЕМА ОФОРМЛЕНИЯ"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="#00E5FF"
+                                   Margin="0,0,0,8"/>
+
+                        <UniformGrid Columns="3" Margin="0,0,0,18">
+                            <Border x:Name="ThemeSystemBtn"
+                                    Background="#1C273D"
+                                    BorderBrush="#24324D"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="10,12"
+                                    Margin="0,0,4,0"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OnThemeSystemClick">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="💻" FontSize="18" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="ThemeSystemLabel" Text="Система" FontSize="12" FontWeight="SemiBold" Foreground="#F1F5F9" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border x:Name="ThemeLightBtn"
+                                    Background="#1C273D"
+                                    BorderBrush="#24324D"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="10,12"
+                                    Margin="4,0,4,0"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OnThemeLightClick">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="☀️" FontSize="18" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="ThemeLightLabel" Text="Светлая" FontSize="12" FontWeight="SemiBold" Foreground="#F1F5F9" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border x:Name="ThemeDarkBtn"
+                                    Background="#1C273D"
+                                    BorderBrush="#00E5FF"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="10,12"
+                                    Margin="4,0,0,0"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OnThemeDarkClick">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="🌙" FontSize="18" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="ThemeDarkLabel" Text="Тёмная" FontSize="12" FontWeight="SemiBold" Foreground="#F1F5F9" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <Rectangle Height="1" Fill="#24324D" Margin="0,0,0,16"/>
+
+                        <!-- SECTION 2: UI SCALE -->
+                        <TextBlock x:Name="ScaleSectionHeader"
+                                   Text="МАСШТАБ ИНТЕРФЕЙСА"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="#00E5FF"
+                                   Margin="0,0,0,8"/>
+
+                        <Border Background="#1C273D"
+                                BorderBrush="#24324D"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="14,12"
+                                Margin="0,0,0,18">
+                            <StackPanel>
+                                <!-- Scale display and minus/plus buttons -->
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock x:Name="ScaleValueLabel"
+                                                   Text="100%"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#00E5FF"/>
+                                        <TextBlock x:Name="ScaleHintLabel"
+                                                   Text="(По умолчанию)"
+                                                   FontSize="12"
+                                                   Foreground="#94A3B8"
+                                                   Margin="8,0,0,0"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="ScaleMinusBtn"
+                                                Content="−"
+                                                Click="OnScaleMinusClick"
+                                                Width="32" Height="30"
+                                                Background="#131B2B"
+                                                BorderBrush="#24324D"
+                                                BorderThickness="1"
+                                                Foreground="#F1F5F9"
+                                                FontWeight="Bold"
+                                                FontSize="16"
+                                                Cursor="Hand"
+                                                Margin="0,0,6,0">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="8"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+
+                                        <Button x:Name="ScalePlusBtn"
+                                                Content="+"
+                                                Click="OnScalePlusClick"
+                                                Width="32" Height="30"
+                                                Background="#131B2B"
+                                                BorderBrush="#24324D"
+                                                BorderThickness="1"
+                                                Foreground="#F1F5F9"
+                                                FontWeight="Bold"
+                                                FontSize="16"
+                                                Cursor="Hand">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="8"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Interactive Slider -->
+                                <Slider x:Name="ScaleSlider"
+                                        Minimum="80"
+                                        Maximum="150"
+                                        SmallChange="5"
+                                        LargeChange="10"
+                                        TickFrequency="5"
+                                        IsSnapToTickEnabled="True"
+                                        ValueChanged="OnScaleSliderValueChanged"
+                                        Margin="0,0,0,10"
+                                        Cursor="Hand"/>
+
+                                <!-- Scale Quick Presets -->
+                                <UniformGrid Columns="6" Margin="0,2,0,0">
+                                    <Border x:Name="Scale80Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#24324D"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="0,0,2,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="0.80">
+                                        <TextBlock Text="80%" FontSize="11" FontWeight="SemiBold" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Scale90Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#24324D"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="2,0,2,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="0.90">
+                                        <TextBlock Text="90%" FontSize="11" FontWeight="SemiBold" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Scale100Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#00E5FF"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="2,0,2,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="1.00">
+                                        <TextBlock Text="100%" FontSize="11" FontWeight="SemiBold" Foreground="#00E5FF" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Scale115Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#24324D"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="2,0,2,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="1.15">
+                                        <TextBlock Text="115%" FontSize="11" FontWeight="SemiBold" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Scale130Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#24324D"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="2,0,2,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="1.30">
+                                        <TextBlock Text="130%" FontSize="11" FontWeight="SemiBold" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Scale150Btn"
+                                            Background="#131B2B"
+                                            BorderBrush="#24324D"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="0,6"
+                                            Margin="2,0,0,0"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnScalePresetClick"
+                                            Tag="1.50">
+                                        <TextBlock Text="150%" FontSize="11" FontWeight="SemiBold" Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                                    </Border>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Border>
+
+                        <Rectangle Height="1" Fill="#24324D" Margin="0,0,0,16"/>
+
+                        <!-- SECTION 3: TEST SERVER -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="ServerSectionHeader"
+                                       Text="ТЕСТОВЫЙ СЕРВЕР"
+                                       FontSize="11"
+                                       FontWeight="Bold"
+                                       Foreground="#00E5FF"/>
+                            <Button Grid.Column="1"
+                                    x:Name="AddServerToggleBtn"
+                                    Content="+ Свой сервер"
+                                    Click="OnToggleAddServerForm"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="#00E5FF"
+                                    FontWeight="SemiBold"
+                                    FontSize="11"
+                                    Cursor="Hand"/>
+                        </Grid>
+
+                        <!-- Add Custom Server Form Panel -->
+                        <Border x:Name="AddServerPanel"
+                                Background="#1C273D"
+                                BorderBrush="#00E5FF"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                Margin="0,0,0,12"
+                                Visibility="Collapsed">
+                            <StackPanel>
+                                <TextBlock Text="Добавить свой сервер для пинга" FontSize="12" FontWeight="Bold" Foreground="#F1F5F9" Margin="0,0,0,8"/>
+                                <TextBox x:Name="ServerNameBox" Text="" Tag="Имя (напр. Яндекс DNS)" Background="#131B2B" Foreground="#F1F5F9" BorderBrush="#24324D" Padding="8,6" Margin="0,0,0,6"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="ServerHostBox" Text="" Tag="Хост/IP (напр. 77.88.8.8)" Background="#131B2B" Foreground="#F1F5F9" BorderBrush="#24324D" Padding="8,6" Margin="0,0,6,0"/>
+                                    <TextBox Grid.Column="1" x:Name="ServerPortBox" Text="53" Tag="Порт" Background="#131B2B" Foreground="#F1F5F9" BorderBrush="#24324D" Padding="8,6"/>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="Отмена" Click="OnCancelAddServer" Background="Transparent" Foreground="#94A3B8" BorderThickness="0" Margin="0,0,8,0" Cursor="Hand"/>
+                                    <Button Content="Сохранить" Click="OnSaveCustomServer" Background="#00E5FF" Foreground="#090D16" FontWeight="Bold" Padding="12,6" Cursor="Hand"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Available Servers List -->
+                        <ItemsControl x:Name="ServersItemsControl" Margin="0,0,0,18">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#1C273D"
+                                            BorderBrush="{Binding BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="10"
+                                            Padding="12,10"
+                                            Margin="0,0,0,6"
+                                            Cursor="Hand"
+                                            MouseLeftButtonUp="OnSelectServerClick"
+                                            Tag="{Binding Target}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Checkmark circle -->
+                                            <Border Width="20" Height="20" CornerRadius="10"
+                                                    Background="{Binding CheckBg}"
+                                                    BorderBrush="{Binding CheckBorder}"
+                                                    BorderThickness="1"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding CheckMark}"
+                                                           FontSize="10"
+                                                           FontWeight="Bold"
+                                                           Foreground="#00E5FF"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Target.Name}" FontSize="13" FontWeight="Bold" Foreground="#F1F5F9"/>
+                                                <TextBlock FontSize="11" Foreground="#94A3B8" Margin="0,2,0,0">
+                                                    <Run Text="{Binding Target.Host}"/>
+                                                    <Run Text=":"/>
+                                                    <Run Text="{Binding Target.Port}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <Button Grid.Column="2"
+                                                    Content="✕"
+                                                    Click="OnDeleteCustomServerClick"
+                                                    Tag="{Binding Target}"
+                                                    Visibility="{Binding DeleteVisibility}"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Foreground="#F43F5E"
+                                                    FontWeight="Bold"
+                                                    Cursor="Hand"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Rectangle Height="1" Fill="#24324D" Margin="0,0,0,16"/>
+
+                        <!-- SECTION 3: WINDOWS TRAY & TELEMETRY -->
+                        <TextBlock x:Name="TraySectionHeader"
+                                   Text="СИСТЕМНЫЙ ТРЕЙ И УВЕДОМЛЕНИЯ WINDOWS"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="#00E5FF"
+                                   Margin="0,0,0,8"/>
+
+                        <Border Background="#1C273D"
+                                BorderBrush="#24324D"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="14,12"
+                                Margin="0,0,0,18">
+                            <StackPanel>
+                                <CheckBox x:Name="TrayEnabledCheck"
+                                          Content="Отображать значок и телеметрию в системном трее"
+                                          Foreground="#F1F5F9"
+                                          FontWeight="SemiBold"
+                                          FontSize="12.5"
+                                          Click="OnTrayCheckChanged"/>
+
+                                <Rectangle Height="1" Fill="#24324D" Margin="0,10,0,10"/>
+
+                                <StackPanel x:Name="TraySubOptionsPanel" Margin="8,0,0,0">
+                                    <CheckBox x:Name="TrayPingCheck"
+                                              Content="Показывать текущий и средний пинг"
+                                              Foreground="#94A3B8"
+                                              FontSize="12"
+                                              Margin="0,0,0,8"
+                                              Click="OnTrayCheckChanged"/>
+
+                                    <CheckBox x:Name="TrayJitterCheck"
+                                              Content="Показывать джиттер и процент потерь"
+                                              Foreground="#94A3B8"
+                                              FontSize="12"
+                                              Margin="0,0,0,8"
+                                              Click="OnTrayCheckChanged"/>
+
+                                    <CheckBox x:Name="TraySpeedCheck"
+                                              Content="Показывать скорость при тесте"
+                                              Foreground="#94A3B8"
+                                              FontSize="12"
+                                              Margin="0,0,0,8"
+                                              Click="OnTrayCheckChanged"/>
+
+                                    <CheckBox x:Name="TrayIpCheck"
+                                              Content="Показывать внешний IP адрес"
+                                              Foreground="#94A3B8"
+                                              FontSize="12"
+                                              Margin="0,0,0,2"
+                                              Click="OnTrayCheckChanged"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Rectangle Height="1" Fill="#24324D" Margin="0,0,0,16"/>
+
+                        <!-- SECTION 4: LANGUAGE -->
+                        <TextBlock x:Name="LangSectionHeader"
+                                   Text="ЯЗЫК ИНТЕРФЕЙСА"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="#00E5FF"
+                                   Margin="0,0,0,8"/>
+
+                        <UniformGrid Columns="2" Margin="0,0,0,10">
+                            <Border x:Name="LangRuBtn"
+                                    Background="#1C273D"
+                                    BorderBrush="#00E5FF"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    Padding="10,10"
+                                    Margin="0,0,4,0"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OnLangRuClick">
+                                <TextBlock Text="🇷🇺 Русский" FontSize="13" FontWeight="Bold" Foreground="#F1F5F9" HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <Border x:Name="LangEnBtn"
+                                    Background="#1C273D"
+                                    BorderBrush="#24324D"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    Padding="10,10"
+                                    Margin="4,0,0,0"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OnLangEnClick">
+                                <TextBlock Text="🇬🇧 English" FontSize="13" FontWeight="Bold" Foreground="#F1F5F9" HorizontalAlignment="Center"/>
+                            </Border>
+                        </UniformGrid>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer Close Button -->
+                <Button Grid.Row="2"
+                        x:Name="DoneBtn"
+                        Content="Готово"
+                        Click="OnCloseClick"
+                        Background="#00E5FF"
+                        Foreground="#090D16"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        Height="40"
+                        Margin="0,16,0,0"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
